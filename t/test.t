@@ -108,7 +108,7 @@ $Data::Dumper::Sortkeys = 1;
 	my $b2 = Data::BitMask->new(($b1->get_constants())[0..17]);
 	ok( &hash_dump($b2->explain_mask(7)),  &hash_dump({AB => 1, AC => 1, BC => 1}) );
 
-	my $b3 = Data::BitMask->new('A' => 1, 'b' => 2, 'Ab' => 3, 'c' => 4);
+	my $b3 = Data::BitMask->new('A' => 1, 'b' => 2, 'Ab' => 3, 'c' => 4, [qw(bc full_match 1)] => 6);
 
 	ok( $b3->build_mask('A|B'), 3 );
 

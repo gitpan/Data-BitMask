@@ -117,7 +117,7 @@ package Data::BitMask;
 
 use vars qw($VERSION $masks);
 
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 $masks = {};
 
@@ -129,6 +129,15 @@ C<explain_mask> or C<explain_const>, constants that are earlier in the list take
 precendence over those later in the list.  Constant names are not allowed to 
 have space or pipes in them, and constant values have to be integers. Constant 
 names are case insensitive but preserving.
+
+If the passed value for the constant name is an anonymous array, then it is 
+presumed that the name is the first value and that the remainder consists of 
+name-value pairs of parameters.  The only currently supported parameter is 
+C<full_match>, which implies that the constant should only be returned from 
+C<break_mask> or C<explain_mask> if it perfectly matches the mask being 
+explained.  For example:
+
+      [qw(FILES_ONLY_NO_INHERIT full_match 1)] =>    1,
 
 =cut
 
@@ -175,7 +184,14 @@ sub _iterate_constants {
 	my($sub) = @_;
 
 	foreach my $i (0..@{$self->{constants}}/2-1) {
-		$sub->($self, $self->{constants}->[$i*2], $self->{constants}->[$i*2+1]);
+		my $name = $self->{constants}->[$i*2];
+		my $params;
+		if (ref($name) eq 'ARRAY') {
+			my(@temp) = @$name;
+			$name = shift @temp;
+			$params = {@temp};
+		}
+		$sub->($self, $name, $self->{constants}->[$i*2+1], $params);
 	}
 }
 
@@ -203,7 +219,7 @@ sub _build_forward_cache {
 	$self->{forward_cache} = {};
 
 	$self->_iterate_constants( sub {
-		my($self, $name, $value) = @_;
+		my($self, $name, $value, $params) = @_;
 		$name = uc($name);
 		if (exists $self->{forward_cache}->{$name}) {
 			$self->{forward_cache}->{$name} != $value and &croak("Multiple values for constant '$name'.");
@@ -216,10 +232,12 @@ sub _build_reverse_cache {
 	my $self = shift;
 
 	$self->{reverse_cache} = {};
+	$self->{full_match} = {};
 
 	$self->_iterate_constants( sub {
-		my($self, $name, $value) = @_;
+		my($self, $name, $value, $params) = @_;
 		push(@{$self->{reverse_cache}->{$value}}, $name);
+		$self->{full_match}->{$name} = undef if $params->{full_match};
 	});
 }
 
@@ -325,6 +343,9 @@ Commonly used for operations like:
 
 Note that C<break_mask> accepts 
 
+To eliminate a constant from explain_mask or break_mask unless it perfectly 
+matches, use C<full_match> constants.
+
 =cut
 
 sub break_mask {
@@ -345,7 +366,9 @@ sub break_mask {
 
 	while (my($value, $names) = each(%{$self->{reverse_cache}})) {
 		if ( int($value) == ($mask & int($value)) ) {
-			@{$struct}{@$names} = (1) x scalar(@$names);
+			my(@names) = grep {!exists $self->{full_match}->{$_}} @$names;
+			scalar(@names) or next;
+			@{$struct}{@names} = (1) x scalar(@names);
 			$testmask |= int($value);
 		}
 	}
@@ -371,6 +394,9 @@ all constants in the list whose values are subsets of another single constant).
 This means, for instance, that if you had only three constants, AB => 3, BC => 
 6, and AC => 5, C<explain_mask> would return all three when passed the value 7 
 because no one constant is a subset of any single one of the others.
+
+To eliminate a constant from explain_mask or break_mask unless it perfectly 
+matches, use C<full_match> constants.
 
 =cut
 

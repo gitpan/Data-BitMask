@@ -91,6 +91,15 @@ Method Reference
     constant values have to be integers. Constant names are case insensitive
     but preserving.
 
+    If the passed value for the constant name is an anonymous array, then it
+    is presumed that the name is the first value and that the remainder
+    consists of name-value pairs of parameters. The only currently supported
+    parameter is "full_match", which implies that the constant should only
+    be returned from "break_mask" or "explain_mask" if it perfectly matches
+    the mask being explained. For example:
+
+          [qw(FILES_ONLY_NO_INHERIT full_match 1)] =>    1,
+
   add_constants
 
     Adds constants to an existing bitmask manipulator. Pass a list of
@@ -127,6 +136,9 @@ Method Reference
 
     Note that "break_mask" accepts
 
+    To eliminate a constant from explain_mask or break_mask unless it
+    perfectly matches, use "full_match" constants.
+
   explain_mask
 
     Explains a mask in terms of a relatively minimal set of constants. Pass
@@ -145,6 +157,9 @@ Method Reference
     you had only three constants, AB => 3, BC => 6, and AC => 5,
     "explain_mask" would return all three when passed the value 7 because no
     one constant is a subset of any single one of the others.
+
+    To eliminate a constant from explain_mask or break_mask unless it
+    perfectly matches, use "full_match" constants.
 
   build_const
 
