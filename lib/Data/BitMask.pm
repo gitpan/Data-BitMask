@@ -117,7 +117,7 @@ package Data::BitMask;
 
 use vars qw($VERSION $masks);
 
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 $masks = {};
 
@@ -323,11 +323,21 @@ Commonly used for operations like:
 
 	if ($MaskManipulator->break_mask($my_mask_value)->{CONSTANT}) {
 
+Note that C<break_mask> accepts 
+
 =cut
 
 sub break_mask {
 	my $self = shift;
 	my($mask) = @_;
+
+	local $^W = 0;
+
+	if (int($mask) eq $mask) {
+		$mask = int($mask) < 0 ? int($mask) + 2**31 + 2**31 : int($mask);
+	} else {
+		$mask = $self->build_mask($mask);
+	}
 
 	my($struct) = {};
 	my $testmask = 0;
@@ -367,6 +377,8 @@ because no one constant is a subset of any single one of the others.
 sub explain_mask {
 	my $self = shift;
 	my($mask) = @_;
+
+	local $^W = 0;
 
 	if (int($mask) eq $mask) {
 		$mask = int($mask) < 0 ? int($mask) + 2**31 + 2**31 : int($mask);
@@ -413,15 +425,13 @@ sub build_const {
 	my $self = shift;
 	my($const) = @_;
 
-	{
-		local $^W = 0;
+	local $^W = 0;
 
-		if (int($const) eq $const) {
-			return int($const) < 0 ? int($const) + 2**31 + 2**31 : int($const);
-		} else {
-			exists $self->{forward_cache}->{$const} or &croak("Unable to find constant '$const'");
-			return $self->{forward_cache}->{$const};
-		}
+	if (int($const) eq $const) {
+		return int($const) < 0 ? int($const) + 2**31 + 2**31 : int($const);
+	} else {
+		exists $self->{forward_cache}->{$const} or &croak("Unable to find constant '$const'");
+		return $self->{forward_cache}->{$const};
 	}
 }
 
@@ -436,6 +446,8 @@ croaks.
 sub explain_const {
 	my $self = shift;
 	my($const) = @_;
+
+	local $^W = 0;
 
 	if (int($const) eq $const) {
 		$const = int($const) < 0 ? int($const) + 2**31 + 2**31 : int($const);

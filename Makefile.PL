@@ -3,13 +3,10 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
   'NAME'    => 'Data::BitMask',
-  'VERSION_FROM'  => 'Data/BitMask.pm', # finds $VERSION
+  'VERSION_FROM'  => 'lib/Data/BitMask.pm', # finds $VERSION
   'PREREQ_PM'    => {
     'Carp' => undef,
     'Test' => undef,      # for testing
     'Data::Dumper' => undef,  # for testing
   }, # e.g., Module::Name => 1.1
-  PM => {
-    'Data/BitMask.pm' => '$(INST_LIBDIR)/BitMask.pm',
-  },
 );

@@ -1,5 +1,10 @@
 Revision history for Perl extension Data::BitMask
 
+0.12  Mon Jan 19 2003
+ - Minor bug fixes with respect to $^W.
+ - Modified break_mask to call build_mask if necessary.
+ - Update directory structure to use lib for pm files.
+
 0.11  Mon Sep 8 2003
  - Fixed test bug resulting from varying serialization
    orders in Data::Dumper.  The error was entirely in

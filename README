@@ -125,6 +125,8 @@ Method Reference
 
             if ($MaskManipulator->break_mask($my_mask_value)->{CONSTANT}) {
 
+    Note that "break_mask" accepts
+
   explain_mask
 
     Explains a mask in terms of a relatively minimal set of constants. Pass

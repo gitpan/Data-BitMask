@@ -1,6 +1,6 @@
 Changes
-Data/BitMask.pm
-MANIFEST
 Makefile.PL
+MANIFEST
 README
+lib/Data/BitMask.pm
 t/test.t
