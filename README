@@ -2,24 +2,24 @@ NAME
     Data::BitMask - bitmask manipulation
 
 SYNOPSIS
-            use Data::BitMask;
+      use Data::BitMask;
 
-            my $FileMask = Data::BitMask->new(
-                            READ =>    1,
-                            WRITE =>   2,
-                            EXECUTE => 4,
-                            RX =>      5,
-                            RWX =>     7,
-                            FULL =>    7,
-                    );
+      my $FileMask = Data::BitMask->new(
+          READ =>    1,
+          WRITE =>   2,
+          EXECUTE => 4,
+          RX =>      5,
+          RWX =>     7,
+          FULL =>    7,
+        );
 
-            my $mask = $FileMask->build_mask('READ|WRITE');
-            print Data::Dumper->Dump([
-                            $FileMask->explain_mask($mask),
-                            $FileMask->break_mask($mask)
-                    ]);
-        
-            my $mask2 = $FileMask->build_mask({FULL => 1, WRITE => 0});
+      my $mask = $FileMask->build_mask('READ|WRITE');
+      print Data::Dumper->Dump([
+          $FileMask->explain_mask($mask),
+          $FileMask->break_mask($mask)
+        ]);
+  
+      my $mask2 = $FileMask->build_mask({FULL => 1, WRITE => 0});
 
 DESCRIPTION
     This module allows one to create bitmask manipulator objects that can be
@@ -47,25 +47,25 @@ Suggest Module Implementation
     Here is one suggested approach to using bitmask manipulators in a
     module.
 
-        {
-        my $cache;
-        sub SECURITY_INFORMATION {
-          $cache ||= Data::BitMask->new(
-              OWNER_SECURITY_INFORMATION => 0x1,
-              GROUP_SECURITY_INFORMATION => 0x2,
-              DACL_SECURITY_INFORMATION  => 0x4,
-              SACL_SECURITY_INFORMATION  => 0x8,
-            );
-        }
-        }
+      {
+      my $cache;
+      sub SECURITY_INFORMATION {
+        $cache ||= Data::BitMask->new(
+            OWNER_SECURITY_INFORMATION => 0x1,
+            GROUP_SECURITY_INFORMATION => 0x2,
+            DACL_SECURITY_INFORMATION  => 0x4,
+            SACL_SECURITY_INFORMATION  => 0x8,
+          );
+      }
+      }
 
     The bitmask manipulator can then be accessed as:
 
-        &SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
+      &SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
 
     Or, if you are outside of the module, as:
 
-        &Win32::Security::SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
+      &Win32::Security::SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
 
     This has several advantages:
 
@@ -165,4 +165,9 @@ Method Reference
 
 AUTHOR
     Toby Ovod-Everett, tovod-everett@alascom.att.com
+
+LICENSE
+    Copyright 2003 Toby Ovod-Everett. All rights reserved. This program is
+    free software; you can redistribute it and/or modify it under the same
+    terms as Perl itself.
 

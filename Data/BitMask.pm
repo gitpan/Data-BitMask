@@ -4,11 +4,10 @@
 #
 # Author: Toby Ovod-Everett
 #############################################################################
-# Copyright 2003 Toby Ovod-Everett.  All rights reserved.
+# Copyright 2003 Toby Ovod-Everett.  All rights reserved
 #
-# This file is distributed under the Artistic License. See
-# http://www.ActiveState.com/corporate/artistic_license.htm or
-# the license that comes with your perl distribution.
+# This program is free software; you can redistribute it and/or modify it
+# under the same terms as Perl itself.
 #
 # For comments, questions, bugs or general interest, feel free to
 # contact Toby Ovod-Everett at tovod-everett@alascom.att.com
@@ -20,24 +19,24 @@ Data::BitMask - bitmask manipulation
 
 =head1 SYNOPSIS
 
-	use Data::BitMask;
+  use Data::BitMask;
 
-	my $FileMask = Data::BitMask->new(
-			READ =>    1,
-			WRITE =>   2,
-			EXECUTE => 4,
-			RX =>      5,
-			RWX =>     7,
-			FULL =>    7,
-		);
+  my $FileMask = Data::BitMask->new(
+      READ =>    1,
+      WRITE =>   2,
+      EXECUTE => 4,
+      RX =>      5,
+      RWX =>     7,
+      FULL =>    7,
+    );
 
-	my $mask = $FileMask->build_mask('READ|WRITE');
-	print Data::Dumper->Dump([
-			$FileMask->explain_mask($mask),
-			$FileMask->break_mask($mask)
-		]);
-	
-	my $mask2 = $FileMask->build_mask({FULL => 1, WRITE => 0});
+  my $mask = $FileMask->build_mask('READ|WRITE');
+  print Data::Dumper->Dump([
+      $FileMask->explain_mask($mask),
+      $FileMask->break_mask($mask)
+    ]);
+  
+  my $mask2 = $FileMask->build_mask({FULL => 1, WRITE => 0});
 
 =head1 DESCRIPTION
 
@@ -65,25 +64,25 @@ C<perl/site/lib/Data/Bitmask.pm>.
 
 Here is one suggested approach to using bitmask manipulators in a module.
 
-    {
-    my $cache;
-    sub SECURITY_INFORMATION {
-      $cache ||= Data::BitMask->new(
-          OWNER_SECURITY_INFORMATION => 0x1,
-          GROUP_SECURITY_INFORMATION => 0x2,
-          DACL_SECURITY_INFORMATION  => 0x4,
-          SACL_SECURITY_INFORMATION  => 0x8,
-        );
-    }
-    }
+  {
+  my $cache;
+  sub SECURITY_INFORMATION {
+    $cache ||= Data::BitMask->new(
+        OWNER_SECURITY_INFORMATION => 0x1,
+        GROUP_SECURITY_INFORMATION => 0x2,
+        DACL_SECURITY_INFORMATION  => 0x4,
+        SACL_SECURITY_INFORMATION  => 0x8,
+      );
+  }
+  }
 
 The bitmask manipulator can then be accessed as:
 
-    &SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
+  &SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
 
 Or, if you are outside of the module, as:
 
-    &Win32::Security::SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
+  &Win32::Security::SECURITY_INFORMATION->build_mask('DACL_SECURITY_INFORMATION');
 
 This has several advantages:
 
@@ -118,7 +117,7 @@ package Data::BitMask;
 
 use vars qw($VERSION $masks);
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 $masks = {};
 
@@ -478,6 +477,12 @@ sub croak {
 =head1 AUTHOR
 
 Toby Ovod-Everett, tovod-everett@alascom.att.com
+
+=head1 LICENSE
+
+Copyright 2003 Toby Ovod-Everett.  All rights reserved.
+This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
 
 =cut
 

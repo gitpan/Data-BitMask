@@ -1,4 +1,11 @@
 Revision history for Perl extension Data::BitMask
 
-0.10
+0.11  Mon Sep 8 2003
+ - Fixed test bug resulting from varying serialization
+   orders in Data::Dumper.  The error was entirely in
+   the test suite.
+ - Minor changes to POD
+ - Change from Artistic License to Standard-Perl
+
+0.10  Sun Sep 7 2003
  - First CPAN release
