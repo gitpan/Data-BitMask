@@ -4,13 +4,13 @@
 #
 # Author: Toby Ovod-Everett
 #############################################################################
-# Copyright 2003 Toby Ovod-Everett.  All rights reserved
+# Copyright 2003, 2004 Toby Ovod-Everett.  All rights reserved
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 #
 # For comments, questions, bugs or general interest, feel free to
-# contact Toby Ovod-Everett at tovod-everett@alascom.att.com
+# contact Toby Ovod-Everett at toby@ovod-everett.org
 #############################################################################
 
 =head1 NAME
@@ -56,8 +56,14 @@ object so as to speed up future mask manipulations.
 
 =head2 Installation instructions
 
-To install via MakeMaker, it's the usual procedure.  There is a fairly full 
-featured test suite.  It can also be installed by copying C<Data/Bitmask.pm> to 
+This module requires C<Module::Build 0.24> to use the automated installation 
+procedures.  With C<Module::Build> installed:
+
+  Build.PL
+  perl build test
+  perl build install
+
+It can also be installed manually by copying C<lib/Data/Bitmask.pm> to 
 C<perl/site/lib/Data/Bitmask.pm>.
 
 =head1 Suggest Module Implementation
@@ -117,7 +123,7 @@ package Data::BitMask;
 
 use vars qw($VERSION $masks);
 
-$VERSION = '0.13';
+$VERSION = '0.90';
 
 $masks = {};
 
@@ -514,11 +520,11 @@ sub croak {
 
 =head1 AUTHOR
 
-Toby Ovod-Everett, tovod-everett@alascom.att.com
+Toby Ovod-Everett, toby@ovod-everett.org
 
 =head1 LICENSE
 
-Copyright 2003 Toby Ovod-Everett.  All rights reserved.
+Copyright 2003, 2004 Toby Ovod-Everett.  All rights reserved.
 This program is free software; you can redistribute it
 and/or modify it under the same terms as Perl itself.
 

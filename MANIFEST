@@ -1,6 +1,8 @@
+Build.PL
 Changes
+MANIFEST			This list of files
+META.yml
 Makefile.PL
-MANIFEST
 README
 lib/Data/BitMask.pm
 t/test.t

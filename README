@@ -38,10 +38,15 @@ DESCRIPTION
     "Data::BitMask" object so as to speed up future mask manipulations.
 
   Installation instructions
+    This module requires "Module::Build 0.24" to use the automated
+    installation procedures. With "Module::Build" installed:
 
-    To install via MakeMaker, it's the usual procedure. There is a fairly
-    full featured test suite. It can also be installed by copying
-    "Data/Bitmask.pm" to "perl/site/lib/Data/Bitmask.pm".
+      Build.PL
+      perl build test
+      perl build install
+
+    It can also be installed manually by copying "lib/Data/Bitmask.pm" to
+    "perl/site/lib/Data/Bitmask.pm".
 
 Suggest Module Implementation
     Here is one suggested approach to using bitmask manipulators in a
@@ -82,7 +87,6 @@ Suggest Module Implementation
 
 Method Reference
   new
-
     Creates a new bitmask manipulator. Pass a list of constant and value
     pairs. The constants do not have to be disjoint, but order does matter.
     When executing "explain_mask" or "explain_const", constants that are
@@ -101,7 +105,6 @@ Method Reference
           [qw(FILES_ONLY_NO_INHERIT full_match 1)] =>    1,
 
   add_constants
-
     Adds constants to an existing bitmask manipulator. Pass a list of
     constant and value pairs as for "new". Constants will be added to the
     end of the list (see "new" for an explanation of ordering concerns).
@@ -110,7 +113,6 @@ Method Reference
     by using "build_mask".
 
   build_mask
-
     This takes one of three things as a parameter:
 
     *   scalar - string is split on '"|"' and/or whitespace to generate a
@@ -125,7 +127,6 @@ Method Reference
     treated as the value, after adding 2**32 to any negative integers.
 
   break_mask
-
     Breaks a mask apart. Pass a mask value as an integer. Returns a hash of
     all constants whose values are subsets of the passed mask. Values are
     set to 1 so the result can safely be passed to "build_mask".
@@ -140,7 +141,6 @@ Method Reference
     perfectly matches, use "full_match" constants.
 
   explain_mask
-
     Explains a mask in terms of a relatively minimal set of constants. Pass
     either a mask value as an integer or any valid parameter for
     "build_mask". Returns a hash of constants that will recreate the mask.
@@ -162,7 +162,6 @@ Method Reference
     perfectly matches, use "full_match" constants.
 
   build_const
-
     This takes one of two things as a parameter:
 
     *   scalar integer - if a scalar integer is passed, then the value is
@@ -171,20 +170,18 @@ Method Reference
     *   scalar - string is looked up in the list of constants
 
   explain_const
-
     Looks for a perfect match for the passed mask value. Pass either a mask
     value as an integer or any valid parameter for "build_mask". If one is
     not found, it croaks.
 
   get_constants
-
     Returns all constants passed either to "new" or "add_constants".
 
 AUTHOR
-    Toby Ovod-Everett, tovod-everett@alascom.att.com
+    Toby Ovod-Everett, toby@ovod-everett.org
 
 LICENSE
-    Copyright 2003 Toby Ovod-Everett. All rights reserved. This program is
-    free software; you can redistribute it and/or modify it under the same
-    terms as Perl itself.
+    Copyright 2003, 2004 Toby Ovod-Everett. All rights reserved. This
+    program is free software; you can redistribute it and/or modify it under
+    the same terms as Perl itself.
 

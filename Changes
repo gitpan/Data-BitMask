@@ -1,5 +1,10 @@
 Revision history for Perl extension Data::BitMask
 
+0.90  Sat Mar 20 2004
+ - Now using Module::Build!
+ - Now generating PPMs as well!
+ - Long live Module::Build!
+
 0.13  Sat Mar 13 2004
  - Added support for full_match constants
 
