@@ -1,8 +1,0 @@
-<SOFTPKG NAME="Data-BitMask" VERSION="0,91,0,0">
-    <TITLE>Data-BitMask</TITLE>
-    <ABSTRACT>bitmask manipulation</ABSTRACT>
-    <AUTHOR>Toby Ovod-Everett, toby@ovod-everett.org</AUTHOR>
-    <IMPLEMENTATION>
-        <CODEBASE HREF="MSWin32-x86-multi-thread/Data-BitMask-0.91.tar.gz" />
-    </IMPLEMENTATION>
-</SOFTPKG>
